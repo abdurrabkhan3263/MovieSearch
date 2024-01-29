@@ -178,7 +178,7 @@ a {
 
 
 .page1 {
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -240,7 +240,7 @@ a {
     user-select: none;
 }
 
-.mov-sec-w {
+#mov-sec-w {
     background-color: #fff;
     color: gray;
     border-radius: 2rem;
@@ -264,7 +264,7 @@ a {
     display: flex;
     flex-direction: column;
     padding-inline: 50px;
-    padding-block-start: 100px;
+    padding-block-start: 20px;
 }
 
 .page2>h3 {
@@ -301,4 +301,3 @@ a {
 #n-all-cards .cards {
     margin-bottom: 30px;
 }
-
