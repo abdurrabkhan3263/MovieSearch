@@ -100,7 +100,7 @@ document.addEventListener('readystatechange', () => {
             duration : 1,
         });
         timeline.from('.info-img' , {
-            x : -500,
+            scale : 0,
             duration : 1.5,
             opacity : 0,
         });
