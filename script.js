@@ -20,11 +20,24 @@ gsap.to('#main', {
 
 // PAGE ANIMATION PART END
 
+// ADDING ID INTO LOCALSTORAGE
+
+function addLocId(location){
+    location.addEventListener('click', (event) => {
+        if (event.target.matches('img')) {
+            let parentDiv = event.target.parentNode;
+            let id = parentDiv.firstElementChild.id;
+            localStorage.setItem('id', JSON.parse(id));
+            window.open('info.html');
+        };
+    });
+}
+
+
 
 // PAGE SEARCH CODE START
 
-const tmApiKey = `d200b667c03f27a9799e244340744b29`
-// const apiKey = '2db3461b';
+const tmApiKey = `d200b667c03f27a9799e244340744b29`;
 
 async function apiCall(title) {
     let response = fetch(`https://api.themoviedb.org/3/search/movie?api_key=${tmApiKey}&language=en-US&page=1&query=${title}`);
@@ -80,6 +93,7 @@ serBtn.addEventListener('click', () => {
     apiCall(serVal.value);
 })
 
+addLocId(pages)
 
 // PAGE SEARCH CODE END
 
@@ -150,28 +164,31 @@ const genresCard = document.querySelector('#genres-card');
 let genHtmlData = '';
 let genI = 0;
 let genCount = 10;
-let genPage = 1
+let genPage = 1;
+let genId = 28;
 catBtn.forEach(item => {
     item.addEventListener('click', (event) => {
+        genHtmlData = '';
         let innerHTML = event.target.innerHTML;
         let id = genresObj[0][`${innerHTML}`];
+        genId = id;
+        findGenres(genId);
+        genI = 0;
+        genCount = 10;
         catBtn.forEach(value => {
             if (value.hasAttribute('id')) {
                 value.removeAttribute('id');
-                findGenres(id);
             }
         })
         if (!event.target.hasAttribute('id')) {
             event.target.setAttribute('id', 'mov-sec-w');
             catValue.innerHTML = event.target.innerHTML;
-            findGenres(id);
         }
     });
 });
 
-function findGenres(id) {
-    console.log(id)
-    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${tmApiKey}&with_genres=${id}&page=${newlyPage}`)
+function findGenres() {
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${tmApiKey}&with_genres=${genId}&page=${genPage}`)
         .then(result => {
             if (!result.ok) {
                 throw new error('SomeThing.....Goes.......Wrong');
@@ -181,18 +198,27 @@ function findGenres(id) {
             }
         })
         .then(data => {
+            if (genPage > 499) {
+                gsap.to('#genres-btn', {
+                    scale: 0,
+                    opacity: 0,
+                    duration: 1,
+                })
+                return;
+            }
             genHtmlFunc(data.results);
         })
 }
 
 function genHtmlFunc(data){
-
+    console.log(genI);
+    console.log(genCount)
     for (genI; genI < genCount; genI++) {
         if (genI === 20) {
             genI = 0;
             genCount = 10;
             genPage++;
-            newlyReleaseApi();
+            findGenres(genId);
             return;
         }
         if (data[genI].poster_path === null) {
@@ -201,23 +227,24 @@ function genHtmlFunc(data){
         genHtmlData += `
         <div class="cards">
         <div id="${data[genI].id}" style="display: none;"></div>
-        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face${data[genI].poster_path}" alt="">
+        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face${data[genI].poster_path}" alt="img">
     </div>`
-        // console.log(genI)
-    }
+}
     genresCard.innerHTML = genHtmlData;
 }
 
 document.querySelector('#genres-btn').addEventListener('click', (event) => {
     genI = genCount;
     genCount += 10;
-    newlyReleaseApi();
+    findGenres(genId);
 });
 
 window.addEventListener('load' , ()=>{
     let id = document.querySelector('#mov-sec-w').innerHTML
-    findGenres(genresObj[0][`${id}`]);
+    findGenres(genId);
 })
+
+addLocId(genresCard);
 
 // MOVIES ALL CATEGORIES END
 
@@ -239,6 +266,7 @@ tPageSec.addEventListener('click', (event) => {
 
 
 // NEWLY RELEASE SECTION START
+
 let newlyPage = 1;
 let newI = 0;
 let movCount = 10;
@@ -303,14 +331,7 @@ document.querySelector('#newly-btn').addEventListener('click', (event) => {
     newlyReleaseApi();
 });
 
-newlyBoxSec.addEventListener('click', (event) => {
-    if (event.target.matches('img')) {
-        let parentDiv = event.target.parentNode;
-        let id = parentDiv.firstElementChild.id;
-        localStorage.setItem('id', JSON.parse(id));
-        window.open('info.html');
-    }
-})
+addLocId(newlyBoxSec);
 
 
 // NEWLY RELEASE SECTION END

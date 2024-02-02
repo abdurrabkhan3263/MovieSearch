@@ -11,7 +11,7 @@ let overSec = document.querySelector('.over-sec');
 
 
 async function apiCall(id) {
-    let url = `https://api.themoviedb.org/3/movie/${id}?api_key=d200b667c03f27a9799e244340744b29&language=en-US`;
+    let url = `https://api.themoviedb.org/3/tv/${id}?api_key=d200b667c03f27a9799e244340744b29&language=en-US`;
     let response = await fetch(url)
         .then(result => {
             if (!result.ok) {
@@ -54,14 +54,14 @@ function minHour(runtime) {
 
 function htmlData(value) {
     let posterImg = `https://image.tmdb.org/t/p/w300_and_h450_bestv2${value.poster_path}`;
-    let title = value.title;
-    let rDate = value.release_date;
-    let movDura = minHour(value.runtime)
+    let title = value.name;
+    let rDate = value.first_air_date;
+    let movDura = minHour(value.episode_run_time[0])
     let year = yearGen(rDate);
     let genres = genresVal(value);
     let overView = value.overview;
     let rating = Math.floor(value.vote_average / 10 * 100) + "%";
-    let tagLine = value.tagline;
+    // let tagLine = value.tagline;
     console.log(document.head.querySelector('title').innerHTML = title)
     // HTML ADDING SECTION START
     poster.src = posterImg;
@@ -80,7 +80,7 @@ function htmlData(value) {
 
 
 
-let idStr = localStorage.getItem('id');
+let idStr = localStorage.getItem('tvid');
 if (idStr !== NaN) {
     let id = parseInt(idStr);
     apiCall(id);

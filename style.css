@@ -201,7 +201,8 @@ a {
 
 .all-cards {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 22px;
     margin-top: 20px;
     flex-wrap: wrap;
     width: 100%;
@@ -236,7 +237,6 @@ a {
     overflow: hidden;
     cursor: pointer;
     margin-bottom: 25px;
-    box-shadow: 0 0 11px -9px rgb(255, 255, 255);
     transition: all 0.4s ease;
 }
 
@@ -431,4 +431,44 @@ a {
 .info-loader img{
     width: 200px;
     height: 200px;
+}
+
+
+.heading{
+    width: 100%;
+    height: 50px;
+    background-color: crimson;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+}
+
+#Newly {
+    text-align: center;
+    font-size: 25px;
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+}
+
+#Newly::after {
+    content: "";
+    height: 2px;
+    width: 0%;
+    background-color: white;
+    position: absolute;
+    bottom: -5%;
+    left: 0;
+    transition: 0.3s ease;
+}
+
+#Newly:hover::after {
+    width: 100%;
+}
+
+.cards:hover{
+    scale : 1.008;
+    transform: translateY(-5px);
+    box-shadow: 5px 6px 40px rgba(255, 255, 255, 0.116);
 }
