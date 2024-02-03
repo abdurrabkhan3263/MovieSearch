@@ -2,11 +2,6 @@
 let searchIcon = document.querySelector('.search-icon');
 let searchContainer = document.querySelector('.search-section');
 
-searchIcon.addEventListener('click', () => {
-    let dispValue = (searchContainer.style.display == "none") ? 'flex' : 'none';
-    searchContainer.style.display = dispValue;
-});
-
 gsap.to('#main', {
     backgroundColor: 'black',
     scrollTrigger: {
@@ -17,6 +12,18 @@ gsap.to('#main', {
         scrub: 2,
     }
 });
+
+let bar = document.querySelector('.bar');
+let mobileSec = document.querySelector('#mobileSer-sec');
+function checkSec(){
+    mobileSec.style.right = ((mobileSec.style.right) === '0px') ? '-100%' : '0px';
+}
+bar.addEventListener('click' , ()=>{
+    checkSec();
+})
+document.querySelector('#crossBtn').addEventListener('click' , ()=>{
+    checkSec();
+})
 
 // PAGE ANIMATION PART END
 
@@ -97,9 +104,18 @@ async function getData(data) {
         });
     });
 }
-let serBtn = document.querySelector('.search-btn');
+let serBtn = document.querySelector('#mainSerBtn');
 let serVal = document.querySelector('#mov-search')
-
+let mobileSer = document.querySelector('#mobileSer-btn');
+let mobileInput = document.querySelector('#mobileSer-input');
+mobileSer.addEventListener('click' , ()=>{
+    if (mobileInput.value == '') {
+        return;
+    }
+    htmlImg = '';
+    apiCall(mobileInput.value);
+    checkSec();
+})
 serBtn.addEventListener('click', () => {
     if (serVal.value == '') {
         return;
@@ -107,6 +123,8 @@ serBtn.addEventListener('click', () => {
     htmlImg = '';
     apiCall(serVal.value);
 })
+
+
 
 addLocId(pages)
 
