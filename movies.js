@@ -68,8 +68,16 @@ let gen = {
 let genId = gen.genres[randomNum].id;
 let genName = gen.genres[randomNum].name;
 
+
+
+document.head.querySelector('title').innerHTML = genName;
 document.querySelector('#Newly').innerHTML = genName;
 
+gsap.from('#Newly' , {
+    y : 20,
+    duration : 1.1,
+    opacity : 0,
+})
 
 
 async function newlyReleaseApi() {
@@ -98,18 +106,42 @@ async function newlyReleaseApi() {
 
 
 function newlyReleaseHtmlFunc(data) {
+    let card;
     for (newI; newI < movCount; newI++) {
+        card = document.createElement('div')
+        card.classList.add('cards');
         if (data[newI].poster_path === null) {
             continue;
         }
-        newHtmlData += `
-        <div class="cards">
+        card.innerHTML = `
         <div id="${data[newI].id}" style="display: none;"></div>
-        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face${data[newI].poster_path}" alt="">
-    </div>`
+        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face${data[newI].poster_path}" alt="">`;
+        newlyBoxSec.appendChild(card);
     }
-    newlyBoxSec.innerHTML = newHtmlData;
+    gsap.from('.cards', {
+        y: 13,
+        duration : 0.5,
+        opacity : 0,
+    });
+    document.querySelectorAll('.cards').forEach(value=>{
+        value.addEventListener('mouseenter' , (event)=>{
+            gsap.to(event.target , {
+                scale : 1.01,
+                y: -5,
+                duration : 0.5,
+            });
+        })
+        value.addEventListener('mouseleave' , (event)=>{
+            gsap.to(event.target , {
+                scale : 1,
+                y: 0,
+                duration : 0.5,
+            });
+        });
+    });
 }
+
+
 
 window.addEventListener('load', () => {
     newlyReleaseApi();
@@ -137,16 +169,15 @@ function addLocId(location) {
 addLocId(newlyBoxSec);
 
 
-gsap.to('#main' , {
-    backgroundColor : 'black',
-    scrollTrigger:{
-        trigger : '.page1',
-        scroller : 'body',
-        start : 'top 0',
-        end : 'top -25%',
-        scrub : 2,
+gsap.to('#main', {
+    backgroundColor: 'black',
+    scrollTrigger: {
+        trigger: '.page1',
+        scroller: 'body',
+        start: 'top 0',
+        end: 'top -25%',
+        scrub: 2,
     }
 })
 
 // CARD ANIMATION;
-

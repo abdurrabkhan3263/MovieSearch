@@ -22,7 +22,7 @@ gsap.to('#main', {
 
 // ADDING ID INTO LOCALSTORAGE
 
-function addLocId(location){
+function addLocId(location) {
     location.addEventListener('click', (event) => {
         if (event.target.matches('img')) {
             let parentDiv = event.target.parentNode;
@@ -80,8 +80,23 @@ async function getData(data) {
         allCards.innerHTML = `<h1>Sorry......Not>>>>>>Found</h1>`;
         pages.appendChild(allCards);
     }
+    document.querySelectorAll('.cards').forEach(value => {
+        value.addEventListener('mouseenter', (event) => {
+            gsap.to(event.target, {
+                scale: 1.01,
+                y: -5,
+                duration: 0.5,
+            });
+        })
+        value.addEventListener('mouseleave', (event) => {
+            gsap.to(event.target, {
+                scale: 1,
+                y: 0,
+                duration: 0.5,
+            });
+        });
+    });
 }
-
 let serBtn = document.querySelector('.search-btn');
 let serVal = document.querySelector('#mov-search')
 
@@ -122,6 +137,22 @@ async function topRated() {
         `
     };
     tPageSec.innerHTML = topHtmlData;
+    document.querySelectorAll('.cards').forEach(value => {
+        value.addEventListener('mouseenter', (event) => {
+            gsap.to(event.target, {
+                scale: 1.01,
+                y: -5,
+                duration: 0.5,
+            });
+        })
+        value.addEventListener('mouseleave', (event) => {
+            gsap.to(event.target, {
+                scale: 1,
+                y: 0,
+                duration: 0.5,
+            });
+        });
+    });
 }
 
 window.addEventListener('load', () => {
@@ -136,7 +167,6 @@ tBtn.addEventListener('click', () => {
     }
     topRated();
     loadNum += 6;
-    console.log('hello')
 })
 
 
@@ -210,9 +240,7 @@ function findGenres() {
         })
 }
 
-function genHtmlFunc(data){
-    console.log(genI);
-    console.log(genCount)
+function genHtmlFunc(data) {
     for (genI; genI < genCount; genI++) {
         if (genI === 20) {
             genI = 0;
@@ -229,8 +257,29 @@ function genHtmlFunc(data){
         <div id="${data[genI].id}" style="display: none;"></div>
         <img src="https://media.themoviedb.org/t/p/w220_and_h330_face${data[genI].poster_path}" alt="img">
     </div>`
-}
+    }
     genresCard.innerHTML = genHtmlData;
+    gsap.from('.cards', {
+        y: 13,
+        duration: 0.5,
+        opacity: 0,
+    });
+    document.querySelectorAll('.cards').forEach(value => {
+        value.addEventListener('mouseenter', (event) => {
+            gsap.to(event.target, {
+                scale: 1.01,
+                y: -5,
+                duration: 0.5,
+            });
+        })
+        value.addEventListener('mouseleave', (event) => {
+            gsap.to(event.target, {
+                scale: 1,
+                y: 0,
+                duration: 0.5,
+            });
+        });
+    });
 }
 
 document.querySelector('#genres-btn').addEventListener('click', (event) => {
@@ -239,7 +288,7 @@ document.querySelector('#genres-btn').addEventListener('click', (event) => {
     findGenres(genId);
 });
 
-window.addEventListener('load' , ()=>{
+window.addEventListener('load', () => {
     let id = document.querySelector('#mov-sec-w').innerHTML
     findGenres(genId);
 })
@@ -299,7 +348,6 @@ async function newlyReleaseApi() {
 
 
 function newlyReleaseHtmlFunc(data) {
-    // console.log(data);
     for (newI; newI < movCount; newI++) {
         if (newI === 20) {
             newI = 0;
@@ -316,9 +364,24 @@ function newlyReleaseHtmlFunc(data) {
         <div id="${data[newI].id}" style="display: none;"></div>
         <img src="https://media.themoviedb.org/t/p/w220_and_h330_face${data[newI].poster_path}" alt="">
     </div>`
-        // console.log(newI)
     }
     newlyBoxSec.innerHTML = newHtmlData;
+    document.querySelectorAll('.cards').forEach(value => {
+        value.addEventListener('mouseenter', (event) => {
+            gsap.to(event.target, {
+                scale: 1.01,
+                y: -5,
+                duration: 0.5,
+            });
+        })
+        value.addEventListener('mouseleave', (event) => {
+            gsap.to(event.target, {
+                scale: 1,
+                y: 0,
+                duration: 0.5,
+            });
+        });
+    });
 }
 
 window.addEventListener('load', () => {

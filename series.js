@@ -6,10 +6,14 @@ let newlyBoxSec = document.querySelector('#newly-box-card');
 let newHtmlData = '';
 
 
-
-
-
 // https://api.themoviedb.org/3/discover/movie?api_key=${tmApiKey}&with_genres=${genId}&page=${newlyPage}
+
+
+gsap.from('#Newly' , {
+    y : 20,
+    duration : 1.1,
+    opacity : 0,
+})
 
 
 async function newlyReleaseApi() {
@@ -49,6 +53,27 @@ function newlyReleaseHtmlFunc(data) {
     </div>`
     }
     newlyBoxSec.innerHTML = newHtmlData;
+    gsap.from('.cards', {
+        y: 13,
+        duration : 0.5,
+        opacity : 0,
+    });
+    document.querySelectorAll('.cards').forEach(value=>{
+        value.addEventListener('mouseenter' , (event)=>{
+            gsap.to(event.target , {
+                scale : 1.01,
+                y: -5,
+                duration : 0.5,
+            });
+        })
+        value.addEventListener('mouseleave' , (event)=>{
+            gsap.to(event.target , {
+                scale : 1,
+                y: 0,
+                duration : 0.5,
+            });
+        });
+    });
 }
 
 window.addEventListener('load', () => {

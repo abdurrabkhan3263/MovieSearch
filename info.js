@@ -62,7 +62,7 @@ function htmlData(value) {
     let overView = value.overview;
     let rating = Math.floor(value.vote_average / 10 * 100) + "%";
     let tagLine = value.tagline;
-    console.log(document.head.querySelector('title').innerHTML = title)
+    document.head.querySelector('title').innerHTML = title
     // HTML ADDING SECTION START
     poster.src = posterImg;
     name.innerHTML = `${title} (${year})`;
