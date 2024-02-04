@@ -94,7 +94,7 @@ function addLocId(location) {
             let parentDiv = event.target.parentNode;
             let id = parentDiv.firstElementChild.id;
             localStorage.setItem('tvid', JSON.parse(id));
-            window.open('tvinfo.html');
+            window.location.href = 'tvinfo.html';
         };
     });
 }
@@ -115,14 +115,81 @@ gsap.to('#main' , {
 
 // CARD ANIMATION;
 
-let bar = document.querySelector('.bar');
-let mobileSec = document.querySelector('#mobileSer-sec');
-function checkSec(){
-    mobileSec.style.right = ((mobileSec.style.right) === '0px') ? '-300px' : '0px';
+let pages = document.querySelector('.page1');
+
+
+async function apiCall(title) {
+    let response = fetch(`https://api.themoviedb.org/3/search/tv?api_key=d200b667c03f27a9799e244340744b29&language=en-US&page=1&query=${title}`);
+    if ((await response).ok) {
+        response = (await response).json()
+            .then(result => {
+                getData(result);
+            }).catch(error => {
+                console.log(error);
+            })
+    } else {
+        return;
+    }
 }
-bar.addEventListener('click' , ()=>{
+async function getData(data) {
+    let dataVal = data.results;
+    pages.innerHTML = '';
+    dataVal.forEach(value => {
+        if (value.poster_path === null) {
+            return;
+        }
+        htmlImg += `
+        <div class="cards">
+        <div id="${value.id}" style="display: none;"></div>
+        <img src="https://media.themoviedb.org/t/p/w220_and_h330_face${value.poster_path}" alt="">
+    </div>`
+    })
+    if (!dataVal.length == 0) {
+        let allCards = document.createElement('div');
+        allCards.classList.add('all-cards');
+        allCards.innerHTML = htmlImg;
+        pages.appendChild(allCards);
+    } else {
+        let allCards = document.createElement('div');
+        allCards.classList.add('all-cards');
+        allCards.innerHTML = `<h1>Sorry......Not>>>>>>Found</h1>`;
+        pages.appendChild(allCards);
+    }
+    document.querySelectorAll('.cards').forEach(value => {
+        value.addEventListener('mouseenter', (event) => {
+            gsap.to(event.target, {
+                scale: 1.01,
+                y: -5,
+                duration: 0.5,
+            });
+        })
+        value.addEventListener('mouseleave', (event) => {
+            gsap.to(event.target, {
+                scale: 1,
+                y: 0,
+                duration: 0.5,
+            });
+        });
+    });
+    let serCards = document.querySelector('.all-cards');
+    addLocId(serCards);
+}
+let serBtn = document.querySelector('#mainSerBtn');
+let serVal = document.querySelector('#mov-search')
+let mobileSer = document.querySelector('#mobileSer-btn');
+let mobileInput = document.querySelector('#mobileSer-input');
+mobileSer.addEventListener('click' , ()=>{
+    if (mobileInput.value == '') {
+        return;
+    }
+    htmlImg = '';
+    apiCall(mobileInput.value);
     checkSec();
 })
-document.querySelector('#crossBtn').addEventListener('click' , ()=>{
-    checkSec();
+serBtn.addEventListener('click', () => {
+    if (serVal.value == '') {
+        return;
+    }
+    htmlImg = '';
+    apiCall(serVal.value);
 })

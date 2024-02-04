@@ -5,8 +5,11 @@ let movRdata = document.querySelector('.mov-date');
 let genresSec = document.querySelector('.genres');
 let movTime = document.querySelector('.mov-time');
 let ratingSec = document.querySelector('.rating-heading');
-let tagLineSec = document.querySelector('.tagline');
+let statuss = document.querySelector('#status');
+let tagline = document.querySelector('#tagline');
 let overSec = document.querySelector('.over-sec');
+let seasons = document.querySelector('#season');
+let numEpi = document.querySelector('#num-epi');
 // INFO SECTION SELECTORS END;
 
 
@@ -61,8 +64,12 @@ function htmlData(value) {
     let genres = genresVal(value);
     let overView = value.overview;
     let rating = Math.floor(value.vote_average / 10 * 100) + "%";
-    // let tagLine = value.tagline;
-    console.log(document.head.querySelector('title').innerHTML = title)
+    let status = value.status;
+    let tagLine = value.tagline;
+    if(tagLine == ''){
+        tagLine = 'none'
+    }
+    document.head.querySelector('title').innerHTML = title
     // HTML ADDING SECTION START
     poster.src = posterImg;
     name.innerHTML = `${title} (${year})`;
@@ -70,11 +77,12 @@ function htmlData(value) {
     genresSec.innerHTML = '• ' + genres;
     movTime.innerHTML = '• ' + movDura;
     ratingSec.innerHTML = rating;
-    tagLineSec.innerHTML = tagLine;
+    statuss.innerHTML = 'Status:- ' + status;
+    tagline.innerHTML = 'TagLine:- ' + tagLine;
     overSec.innerHTML = overView;
-
+    seasons.innerHTML = `Number of Seasons ${value.number_of_seasons}`;
+    numEpi.innerHTML = `Number of Episodes ${value.number_of_episodes}`;
     // HTML ADDING SECTION END
-
 };
 
 
@@ -96,11 +104,11 @@ document.addEventListener('readystatechange', () => {
             duration : 1,
         });
         timeline.from('.info-img' , {
-            scale : 0,
+            x : -800,
             duration : 1.5,
             opacity : 0,
         });
-        timeline.from('.Overview , .theme , .rating , .facts , .mov-name ' , {
+        timeline.from('.Overview , .theme , .rating , .facts , .mov-name , .num-value' , {
             x : 800,
             duration : 1.5,
             stagger : 0.2,

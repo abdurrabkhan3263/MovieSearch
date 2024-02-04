@@ -13,17 +13,6 @@ gsap.to('#main', {
     }
 });
 
-let bar = document.querySelector('.bar');
-let mobileSec = document.querySelector('#mobileSer-sec');
-function checkSec(){
-    mobileSec.style.right = ((mobileSec.style.right) === '0px') ? '-100%' : '0px';
-}
-bar.addEventListener('click' , ()=>{
-    checkSec();
-})
-document.querySelector('#crossBtn').addEventListener('click' , ()=>{
-    checkSec();
-})
 
 // PAGE ANIMATION PART END
 
@@ -35,7 +24,7 @@ function addLocId(location) {
             let parentDiv = event.target.parentNode;
             let id = parentDiv.firstElementChild.id;
             localStorage.setItem('id', JSON.parse(id));
-            window.open('info.html');
+            window.location.href = 'info.html';
         };
     });
 }
@@ -45,6 +34,9 @@ function addLocId(location) {
 // PAGE SEARCH CODE START
 
 const tmApiKey = `d200b667c03f27a9799e244340744b29`;
+let htmlImg = '';
+let pages = document.querySelector('.pages');
+
 
 async function apiCall(title) {
     let response = fetch(`https://api.themoviedb.org/3/search/movie?api_key=${tmApiKey}&language=en-US&page=1&query=${title}`);
@@ -59,10 +51,6 @@ async function apiCall(title) {
         return;
     }
 }
-
-let htmlImg = '';
-let pages = document.querySelector('.pages');
-
 async function getData(data) {
     let dataVal = data.results;
     pages.innerHTML = '';
@@ -324,7 +312,7 @@ tPageSec.addEventListener('click', (event) => {
         let parentDiv = event.target.parentNode;
         let id = parentDiv.firstElementChild.id;
         localStorage.setItem('id', JSON.parse(id));
-        window.open('info.html');
+        window.location.href = 'info.html';
     }
 })
 

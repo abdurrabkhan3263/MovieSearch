@@ -161,7 +161,7 @@ function addLocId(location) {
             let parentDiv = event.target.parentNode;
             let id = parentDiv.firstElementChild.id;
             localStorage.setItem('id', JSON.parse(id));
-            window.open('info.html');
+            window.location.href = 'info.html';
         };
     });
 }
@@ -181,14 +181,3 @@ gsap.to('#main', {
 })
 
 // CARD ANIMATION;
-let bar = document.querySelector('.bar');
-let mobileSec = document.querySelector('#mobileSer-sec');
-function checkSec(){
-    mobileSec.style.right = ((mobileSec.style.right) === '0px') ? '-300px' : '0px';
-}
-bar.addEventListener('click' , ()=>{
-    checkSec();
-})
-document.querySelector('#crossBtn').addEventListener('click' , ()=>{
-    checkSec();
-})

@@ -8,24 +8,40 @@
 </head>
 
 <body>
-    <div class="info-loader" style="display: none;">
-        <img src="img/loading.gif" alt="loading">
+    <div class="info-loader">
+        <div class="loading"></div>
     </div>
 
     <section id="nav">
+        <a href="index.html"><img src="img/logo.png" alt="logo"></a>
         <div class="left-section">
-            <a href="index.html"><img src="img/logo.png" alt="logo"></a>
-            <a href="index.html" target="_blank">
+            <a href="index.html">
                 <h4>Home</h4>
             </a>
-            <a href="movies.html" target="_blank">
+            <a href="movies.html">
                 <h4>Movies</h4>
             </a>
-            <a href="series.html" target="_blank" class="left-section-dashed">
+            <a href="series.html">
                 <h4>Series</h4>
             </a>
         </div>
+        <i class="bar fa-solid fa-bars-staggered"></i>
     </section>
+    <div class="mobileSer" id="mobileSer-sec">
+        <i class="fa-solid fa-xmark" id="crossBtn"></i>
+        <div class="left-section">
+            <a href="index.html">
+                <h4>Home</h4>
+            </a>
+            <a href="movies.html">
+                <h4>Movies</h4>
+            </a>
+            <a href="series.html">
+                <h4>Series</h4>
+            </a>
+        </div>
+        </section>
+    </div>
 
     <section id="info-main">
         <div class="info-img"><img
@@ -46,7 +62,8 @@
                 <h3 class="rating-heading">75%</h3>
             </div>
             <div class="theme">
-                <i class="tagline">Every good thing in this world started with a dream.</i>
+                <i class="tagline" id="status">Every good thing in this world started with a dream.</i>
+                <i class="tagline" id="tagline">Every good thing in this world started with a dream.</i>
             </div>
             <div class="Overview">
                 <h3>Overview</h3>
@@ -54,13 +71,19 @@
                     bite at a time is proof that the best things in life begin with a dream, and if you are lucky enough
                     to meet Willy Wonka, anything is possible.</p>
             </div>
+            <div class="num-value">
+                <div class="num-facts" id="season">Number of Seasons</div>
+                <div class="num-facts" id="num-epi">Number of Episodes</div>
+            </div>
         </div>
     </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
         integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- <script src="tvinfo.js"></script> -->
+    <script src="https://kit.fontawesome.com/88fbbffc8c.js" crossorigin="anonymous"></script>
+    <script src="barAnimation.js"></script>
+    <script src="tvinfo.js"></script>
 </body>
 
 </html>

@@ -91,12 +91,12 @@ document.addEventListener('readystatechange', () => {
     let timeline = gsap.timeline();
     if (document.readyState === 'complete') {
         timeline.to('.info-loader', {
-            y: -100 + '%',
+            y: -110 + '%',
             delay: 0.8,
             duration : 1,
         });
         timeline.from('.info-img' , {
-            scale : 0,
+            x : -800,
             duration : 1.5,
             opacity : 0,
         });
